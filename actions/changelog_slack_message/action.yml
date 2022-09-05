@@ -1,0 +1,15 @@
+name: Build changelog Slack message
+description: Builds a Slack message from given JSON containing changelog
+
+inputs:
+  CHANGELOG_JSON:
+    description: JSON containing changelog
+    required: true
+
+outputs: 
+  SLACK_MESSAGE:
+    description: Generated slack message to send
+
+runs:
+  using: 'node16'
+  main: 'dist/index.js'

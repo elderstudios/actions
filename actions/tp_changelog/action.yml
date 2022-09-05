@@ -1,0 +1,24 @@
+name: Create changelog action
+description: Creates changelog with TargetProcess ids
+
+inputs:
+  GITHUB_TOKEN:
+    description: Github token
+    required: true
+  GITHUB_PR_URL:
+    description: URL of pull request commits
+    required: true
+  TP_ACCESS_TOKEN:
+    description: TargetProcess access token
+    required: true
+  TP_URL:
+    description: TargetProccess URL
+    required: true
+
+outputs: 
+  CHANGELOG_JSON:
+    description: JSON containing changelog
+    
+runs:
+  using: 'node16'
+  main: 'dist/index.js'

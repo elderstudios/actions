@@ -20,6 +20,7 @@ runs:
   using: 'composite'
   steps:
     - name: Setup environment variables for the notification
+      shell: bash
       run: |
         echo "RUN_LINK=https://github.com/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID" >> $GITHUB_ENV
         echo "DEPLOYMENT_STATUS=$(echo "${{ inputs.status }}" | tr '[:lower:]' '[:upper:]')" >> $GITHUB_ENV
@@ -31,7 +32,8 @@ runs:
         input: ${{ inputs.template-file-path }}
         output: output.json
     - name: Dump slack notification payload
-      run: output.json
+      shell: bash
+      run: cat output.json
     - name: Send Slack notification
       uses: slackapi/slack-github-action@v1.21.0
       with:

@@ -1,0 +1,41 @@
+name: Send slack message with a deployment status
+description: Builds a Slack message from given JSON template, substitutes variables in the template and sends the slack message as a webhook
+
+inputs:
+  status:
+    description: Status to be notified. It can be either 'success' or 'failure'
+    required: true
+  template-file-path:
+    description: Path to the template containing message payload JSON according to the BlockKit specification (https://api.slack.com/block-kit/building)
+    required: false
+  slack-webhook-url:
+    description: URL of the Slack webhook to send the notification
+    required: true
+
+outputs: 
+  SLACK_MESSAGE:
+    description: Generated slack message to send
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Setup environment variables for the notification
+      run: |
+        echo "RUN_LINK=https://github.com/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID" >> $GITHUB_ENV
+        echo "DEPLOYMENT_STATUS=$(echo "${{ inputs.status }}" | tr '[:lower:]' '[:upper:]')" >> $GITHUB_ENV
+        echo "DEPLOYMENT_STATUS_ICON=$([ "${{ inputs.status }}" == "success" ] && echo "https://www.iconsdb.com/icons/download/green/check-mark-11-128.gif" || echo "https://www.iconsdb.com/icons/download/red/warning-3-128.jpg")" >> $GITHUB_ENV
+        echo "DEPLOYMENT_STATUS_HINT=$([ "${{ inputs.status }}" == "success" ] && echo "This is a regular release. See the latest release changelog" || echo "Check the AWS logs during ECS deployment")" >> $GITHUB_ENV
+    - name: Substitute variables in the slack message template
+      uses: danielr1996/envsubst-action@1.1.0
+      with:
+        input: ${{ inputs.template-file-path }}
+        output: output.json
+    - name: Dump slack notification payload
+      run: output.json
+    - name: Send Slack notification
+      uses: slackapi/slack-github-action@v1.21.0
+      with:
+        payload-file-path: output.json
+      env:
+        SLACK_WEBHOOK_URL: ${{ inputs.slack-webhook-url }}
+        SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK

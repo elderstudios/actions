@@ -1,0 +1,15 @@
+name: Build changelog Slack message
+description: Builds a Slack BlockKit sections from given JSON containing changelog
+
+inputs:
+  CHANGELOG_JSON:
+    description: JSON containing changelog
+    required: true
+
+outputs:
+  SLACK_CHANGELOG_SECTIONS:
+    description: Generated JSON array with Slack BlockKit sections to be embedded in a Slack message
+
+runs:
+  using: 'node16'
+  main: 'dist/index.js'

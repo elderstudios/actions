@@ -4,28 +4,25 @@ const util = require('util');
 const userStorySectionText = "*:memo: User stories and tasks: *";
 const bugSectionText = "*:ladybug: Bug fixes: *";
 const unassignedSectionText = "*:question: Unassigned: *";
-const header = "BACKEND - DEV has been promoted to UAT! \n Release notes:";
 
 const run = async () => {
   try {
     const changelogJson = JSON.parse(core.getInput('CHANGELOG_JSON', {required: true}));
-    let blocks = [];
 
     const userStories = changelogJson.userStories;
     const bugs = changelogJson.bugs;
     const unassigned = changelogJson.unassigned;
 
-    blocks.push(buildHeaderblock(header));
     //build blocks for US, bug, unassigned sections
     //of US 1 user story item per block - create new block for each user story
+    let blocks = [];
     blocks = blocks.concat(buildSectionAndHeader(userStorySectionText, userStories, userStoryFormat, 1));
     blocks = blocks.concat(buildSectionAndHeader(bugSectionText, bugs, bugOrUserStoryFormat, 15)); //15 items per block
     blocks = blocks.concat(buildSectionAndHeader(unassignedSectionText, unassigned, unassignedFormat, 15));
 
-    const message = {blocks: blocks};
     //logging output for debug purposes
-    console.log(util.inspect(message, false, null, true));
-    core.setOutput("SLACK_MESSAGE", message);
+    console.log(util.inspect(blocks, false, null, true));
+    core.setOutput("SLACK_CHANGELOG_SECTIONS", blocks);
   } catch (error) {
     core.setFailed(error.message);
   }
@@ -49,14 +46,6 @@ const unassignedFormat = (index, item) => `${index + 1}. ${item.commit} by _${it
 const userStoryFormat = (index, item) => {
   const formatUs = bugOrUserStoryFormat(index, item);
   return formatUs + '\n' + formatUserStoryTasks(item.tasks, index);
-}
-
-const buildItemsSectionBlock = (items, format) => {
-  const formattedItems = items.map((item, index) => {
-    return format(index, item);
-  })
-  const itemsString = formattedItems.join("\n");
-  return buildSectionBlock(itemsString);
 }
 
 const buildItemsSectionBlocks = (items, format, blockSize) => {
@@ -83,10 +72,6 @@ const formatUserStoryTasks = (tasks, usIndex) => {
 
 const buildSectionBlock = (text) => {
   return buildBlock("section", "mrkdwn", text);
-}
-
-const buildHeaderblock = (text) => {
-  return buildBlock("header", "plain_text", text);
 }
 
 const buildBlock = (type, textType, text) => {

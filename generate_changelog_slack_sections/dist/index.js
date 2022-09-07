@@ -1,7 +1,7 @@
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 607:
+/***/ 609:
 /***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
 
 "use strict";
@@ -28,7 +28,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.issue = exports.issueCommand = void 0;
 const os = __importStar(__nccwpck_require__(37));
-const utils_1 = __nccwpck_require__(448);
+const utils_1 = __nccwpck_require__(424);
 /**
  * Commands
  *
@@ -100,7 +100,7 @@ function escapeProperty(s) {
 
 /***/ }),
 
-/***/ 993:
+/***/ 131:
 /***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
 
 "use strict";
@@ -135,12 +135,12 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.getIDToken = exports.getState = exports.saveState = exports.group = exports.endGroup = exports.startGroup = exports.info = exports.notice = exports.warning = exports.error = exports.debug = exports.isDebug = exports.setFailed = exports.setCommandEcho = exports.setOutput = exports.getBooleanInput = exports.getMultilineInput = exports.getInput = exports.addPath = exports.setSecret = exports.exportVariable = exports.ExitCode = void 0;
-const command_1 = __nccwpck_require__(607);
-const file_command_1 = __nccwpck_require__(815);
-const utils_1 = __nccwpck_require__(448);
+const command_1 = __nccwpck_require__(609);
+const file_command_1 = __nccwpck_require__(245);
+const utils_1 = __nccwpck_require__(424);
 const os = __importStar(__nccwpck_require__(37));
 const path = __importStar(__nccwpck_require__(17));
-const oidc_utils_1 = __nccwpck_require__(379);
+const oidc_utils_1 = __nccwpck_require__(594);
 /**
  * The code to exit an action
  */
@@ -418,17 +418,17 @@ exports.getIDToken = getIDToken;
 /**
  * Summary exports
  */
-var summary_1 = __nccwpck_require__(141);
+var summary_1 = __nccwpck_require__(204);
 Object.defineProperty(exports, "summary", ({ enumerable: true, get: function () { return summary_1.summary; } }));
 /**
  * @deprecated use core.summary
  */
-var summary_2 = __nccwpck_require__(141);
+var summary_2 = __nccwpck_require__(204);
 Object.defineProperty(exports, "markdownSummary", ({ enumerable: true, get: function () { return summary_2.markdownSummary; } }));
 /**
  * Path exports
  */
-var path_utils_1 = __nccwpck_require__(572);
+var path_utils_1 = __nccwpck_require__(376);
 Object.defineProperty(exports, "toPosixPath", ({ enumerable: true, get: function () { return path_utils_1.toPosixPath; } }));
 Object.defineProperty(exports, "toWin32Path", ({ enumerable: true, get: function () { return path_utils_1.toWin32Path; } }));
 Object.defineProperty(exports, "toPlatformPath", ({ enumerable: true, get: function () { return path_utils_1.toPlatformPath; } }));
@@ -436,7 +436,7 @@ Object.defineProperty(exports, "toPlatformPath", ({ enumerable: true, get: funct
 
 /***/ }),
 
-/***/ 815:
+/***/ 245:
 /***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
 
 "use strict";
@@ -467,7 +467,7 @@ exports.issueCommand = void 0;
 /* eslint-disable @typescript-eslint/no-explicit-any */
 const fs = __importStar(__nccwpck_require__(147));
 const os = __importStar(__nccwpck_require__(37));
-const utils_1 = __nccwpck_require__(448);
+const utils_1 = __nccwpck_require__(424);
 function issueCommand(command, message) {
     const filePath = process.env[`GITHUB_${command}`];
     if (!filePath) {
@@ -485,7 +485,7 @@ exports.issueCommand = issueCommand;
 
 /***/ }),
 
-/***/ 379:
+/***/ 594:
 /***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
 
 "use strict";
@@ -501,9 +501,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.OidcClient = void 0;
-const http_client_1 = __nccwpck_require__(639);
-const auth_1 = __nccwpck_require__(736);
-const core_1 = __nccwpck_require__(993);
+const http_client_1 = __nccwpck_require__(113);
+const auth_1 = __nccwpck_require__(993);
+const core_1 = __nccwpck_require__(131);
 class OidcClient {
     static createHttpClient(allowRetry = true, maxRetry = 10) {
         const requestOptions = {
@@ -569,7 +569,7 @@ exports.OidcClient = OidcClient;
 
 /***/ }),
 
-/***/ 572:
+/***/ 376:
 /***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
 
 "use strict";
@@ -634,7 +634,7 @@ exports.toPlatformPath = toPlatformPath;
 
 /***/ }),
 
-/***/ 141:
+/***/ 204:
 /***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
 
 "use strict";
@@ -924,7 +924,7 @@ exports.summary = _summary;
 
 /***/ }),
 
-/***/ 448:
+/***/ 424:
 /***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
@@ -971,7 +971,7 @@ exports.toCommandProperties = toCommandProperties;
 
 /***/ }),
 
-/***/ 736:
+/***/ 993:
 /***/ (function(__unused_webpack_module, exports) {
 
 "use strict";
@@ -1059,7 +1059,7 @@ exports.PersonalAccessTokenCredentialHandler = PersonalAccessTokenCredentialHand
 
 /***/ }),
 
-/***/ 639:
+/***/ 113:
 /***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
 
 "use strict";
@@ -1097,8 +1097,8 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.HttpClient = exports.isHttps = exports.HttpClientResponse = exports.HttpClientError = exports.getProxyUrl = exports.MediaTypes = exports.Headers = exports.HttpCodes = void 0;
 const http = __importStar(__nccwpck_require__(685));
 const https = __importStar(__nccwpck_require__(687));
-const pm = __importStar(__nccwpck_require__(281));
-const tunnel = __importStar(__nccwpck_require__(122));
+const pm = __importStar(__nccwpck_require__(86));
+const tunnel = __importStar(__nccwpck_require__(371));
 var HttpCodes;
 (function (HttpCodes) {
     HttpCodes[HttpCodes["OK"] = 200] = "OK";
@@ -1671,7 +1671,7 @@ const lowercaseKeys = (obj) => Object.keys(obj).reduce((c, k) => ((c[k.toLowerCa
 
 /***/ }),
 
-/***/ 281:
+/***/ 86:
 /***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
@@ -1739,15 +1739,15 @@ exports.checkBypass = checkBypass;
 
 /***/ }),
 
-/***/ 122:
+/***/ 371:
 /***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
 
-module.exports = __nccwpck_require__(762);
+module.exports = __nccwpck_require__(649);
 
 
 /***/ }),
 
-/***/ 762:
+/***/ 649:
 /***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
@@ -2140,34 +2140,31 @@ module.exports = require("util");
 var __webpack_exports__ = {};
 // This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
 (() => {
-const core = __nccwpck_require__(993);
+const core = __nccwpck_require__(131);
 const util = __nccwpck_require__(837);
 
 const userStorySectionText = "*:memo: User stories and tasks: *";
 const bugSectionText = "*:ladybug: Bug fixes: *";
 const unassignedSectionText = "*:question: Unassigned: *";
-const header = "BACKEND - DEV has been promoted to UAT! \n Release notes:";
 
 const run = async () => {
   try {
     const changelogJson = JSON.parse(core.getInput('CHANGELOG_JSON', {required: true}));
-    let blocks = [];
 
     const userStories = changelogJson.userStories;
     const bugs = changelogJson.bugs;
     const unassigned = changelogJson.unassigned;
 
-    blocks.push(buildHeaderblock(header));
     //build blocks for US, bug, unassigned sections
     //of US 1 user story item per block - create new block for each user story
+    let blocks = [];
     blocks = blocks.concat(buildSectionAndHeader(userStorySectionText, userStories, userStoryFormat, 1));
     blocks = blocks.concat(buildSectionAndHeader(bugSectionText, bugs, bugOrUserStoryFormat, 15)); //15 items per block
     blocks = blocks.concat(buildSectionAndHeader(unassignedSectionText, unassigned, unassignedFormat, 15));
 
-    const message = {blocks: blocks};
     //logging output for debug purposes
-    console.log(util.inspect(message, false, null, true));
-    core.setOutput("SLACK_MESSAGE", message);
+    console.log(util.inspect(blocks, false, null, true));
+    core.setOutput("SLACK_CHANGELOG_SECTIONS", blocks);
   } catch (error) {
     core.setFailed(error.message);
   }
@@ -2191,14 +2188,6 @@ const unassignedFormat = (index, item) => `${index + 1}. ${item.commit} by _${it
 const userStoryFormat = (index, item) => {
   const formatUs = bugOrUserStoryFormat(index, item);
   return formatUs + '\n' + formatUserStoryTasks(item.tasks, index);
-}
-
-const buildItemsSectionBlock = (items, format) => {
-  const formattedItems = items.map((item, index) => {
-    return format(index, item);
-  })
-  const itemsString = formattedItems.join("\n");
-  return buildSectionBlock(itemsString);
 }
 
 const buildItemsSectionBlocks = (items, format, blockSize) => {
@@ -2225,10 +2214,6 @@ const formatUserStoryTasks = (tasks, usIndex) => {
 
 const buildSectionBlock = (text) => {
   return buildBlock("section", "mrkdwn", text);
-}
-
-const buildHeaderblock = (text) => {
-  return buildBlock("header", "plain_text", text);
 }
 
 const buildBlock = (type, textType, text) => {

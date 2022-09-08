@@ -4,7 +4,8 @@ description: Builds a Slack message from given JSON template, substitutes variab
 inputs:
   status:
     description: Status to be notified. It can be either 'success' or 'failure'
-    required: true
+    required: false
+    default: "success"
   status-hint-success:
     description: A hint to display if the status is `success`.
     required: false

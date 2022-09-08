@@ -7,6 +7,7 @@ and sends the message to a slack webhook. There are some default variables suppo
 
 Apart from the inputs and outputs documented in the metadata file there are specific variables supported in the template file:
 - `RUN_LINK` - GitHub URL of the pipeline execution
+- `EXTRA_SECTIONS` - BlockKit sections ready to be embedded in the template
 - `COMMIT_FORMATTED` - last commit message. Apostrophes are escaped which allows to embed the message to the BlockKit JSON
 - `DEPLOYMENT_STATUS` - upper-cased status from the input
 - `DEPLOYMENT_STATUS_ICON` - icon URL corresponding to the status. Green tick for `success`, red exclamation mark for `failure`
@@ -24,6 +25,7 @@ Apart from the inputs and outputs documented in the metadata file there are spec
         "text": "New *BACKEND* functionality for Hub has been added to DEV environment:\n\n*<$RUN_LINK|$COMMIT_FORMATTED>*"
       }
     },
+    $EXTRA_SECTIONS,
     {
       "type": "section",
       "text": {

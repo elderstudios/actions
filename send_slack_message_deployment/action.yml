@@ -33,10 +33,10 @@ runs:
     - name: Setup environment variables for the notification
       shell: bash
       run: |
-        echo "ENVIRONMENT=$(echo "${{ inputs.environment }}" | tr '[:lower:]' '[:upper:]')" >> $GITHUB_ENV
         echo "RUN_LINK=https://github.com/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID" >> $GITHUB_ENV
         echo "EXTRA_SECTIONS=$(echo "${{ inputs.extra-sections }}" | jq -r '.' | head -n -1 | tail -n +2)"
         echo "COMMIT_FORMATTED=$(git log -1 --oneline --pretty=format:'%s' | sed 's/"/\\"/g')" >> $GITHUB_ENV
+        echo "DEPLOYMENT_ENVIRONMENT=$(echo "${{ inputs.environment }}" | tr '[:lower:]' '[:upper:]')" >> $GITHUB_ENV
         echo "DEPLOYMENT_STATUS=$(echo "${{ inputs.status }}" | tr '[:lower:]' '[:upper:]')" >> $GITHUB_ENV
         echo "DEPLOYMENT_STATUS_ICON=$([ "${{ inputs.status }}" == "success" ] && echo "https://www.iconsdb.com/icons/download/green/check-mark-11-128.gif" || echo "https://www.iconsdb.com/icons/download/red/warning-3-128.jpg")" >> $GITHUB_ENV
         echo "DEPLOYMENT_STATUS_HINT=$([ "${{ inputs.status }}" == "success" ] && echo "${{ inputs.status-hint-success }}" || echo "${{ inputs.status-hint-failure }}")" >> $GITHUB_ENV

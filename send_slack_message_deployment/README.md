@@ -6,10 +6,10 @@ and sends the message to a slack webhook. There are some default variables suppo
 ## Usage
 
 Apart from the inputs and outputs documented in the metadata file there are specific variables supported in the template file:
-- `ENVIRONMENT` - Target environment of the deployment
 - `RUN_LINK` - GitHub URL of the deployment pipeline execution
 - `EXTRA_SECTIONS` - Extra BlockKit sections ready to be embedded in the template. Input `extra-sections` must be provided to be supported in the template.
 - `COMMIT_FORMATTED` - Last commit message. Apostrophes are escaped which allows to embed the message to the BlockKit JSON
+- `DEPLOYMENT_ENVIRONMENT` - Target environment of the deployment
 - `DEPLOYMENT_STATUS` - Upper-cased status from the input
 - `DEPLOYMENT_STATUS_ICON` - icon URL corresponding to the status. Green tick for `success`, red exclamation mark for `failure`
 - `DEPLOYMENT_STATUS_HINT` - a hint on a follow-up action according to the deployment status
@@ -23,7 +23,7 @@ Apart from the inputs and outputs documented in the metadata file there are spec
       "type": "section",
       "text": {
         "type": "mrkdwn",
-        "text": "New *BACKEND* functionality for Hub has been added to $ENVIRONMENT environment:\n\n*<$RUN_LINK|$COMMIT_FORMATTED>*"
+        "text": "New *BACKEND* functionality for Hub has been added to $DEPLOYMENT_ENVIRONMENT environment:\n\n*<$RUN_LINK|$COMMIT_FORMATTED>*"
       }
     },
     $EXTRA_SECTIONS,

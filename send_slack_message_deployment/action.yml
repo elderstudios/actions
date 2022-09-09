@@ -34,7 +34,7 @@ runs:
       shell: bash
       run: |
         echo "RUN_LINK=https://github.com/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID" >> $GITHUB_ENV
-        echo "EXTRA_SECTIONS=$(echo "${{ inputs.extra-sections }}" | jq -r '.' | head -n -1 | tail -n +2)" >> $GITHUB_ENV
+        echo "EXTRA_SECTIONS=$(echo '${{ inputs.extra-sections }}' | jq -r '.' | head -n -1 | tail -n +2)" >> $GITHUB_ENV
         echo "COMMIT_FORMATTED=$(git log -1 --oneline --pretty=format:'%s' | sed 's/"/\\"/g')" >> $GITHUB_ENV
         echo "DEPLOYMENT_ENVIRONMENT=$(echo "${{ inputs.environment }}" | tr '[:lower:]' '[:upper:]')" >> $GITHUB_ENV
         echo "DEPLOYMENT_STATUS=$(echo "${{ inputs.status }}" | tr '[:lower:]' '[:upper:]')" >> $GITHUB_ENV

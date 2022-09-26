@@ -1,0 +1,47 @@
+name: Send changelog to Slack
+description: Builds Slack message from raw changelog JSON and sends to Slack
+
+inputs:
+  message:
+    description: Message to include before the changelog
+    required: true
+  raw-changelog:
+    description: Downloaded changelog JSON
+    required: true
+  slack-webhook-url:
+    description: URL of the Slack webhook to send the notification
+    required: true
+
+runs:
+  using: composite
+  steps:
+    - name: Generate changelog block section
+      if: ${{ always() }}
+      id: prep_slack_changelog
+      uses: elderstudios/actions/generate_changelog_slack_sections@v2
+      with:
+        CHANGELOG_JSON: ${{inputs.raw-changelog}}
+    - name: Prepare env variables
+      shell: bash
+      run: |
+        echo 'CHANGELOG<<EOF' >> $GITHUB_ENV
+        echo '${{steps.prep_slack_changelog.outputs.SLACK_CHANGELOG_SECTIONS}}' | jq -r '.' | head -n -1 | tail -n +2 >> $GITHUB_ENV
+        echo 'EOF' >> $GITHUB_ENV
+        echo HEADER_MESSAGE="${{inputs.message}}" >> $GITHUB_ENV
+    - name: Checkout to actions repository
+      uses: actions/checkout@v2
+      with:
+        repository: elderstudios/actions
+        path: actions-repo
+    - name: Substitute variables in the slack message template
+      uses: danielr1996/envsubst-action@1.1.0
+      with:
+        input: ./actions-repo/send_slack_message_changelog/changelog_message.tpl.json
+        output: output.json
+    - name: Send Slack notification
+      uses: slackapi/slack-github-action@v1.21.0
+      with:
+        payload-file-path: output.json
+      env:
+        SLACK_WEBHOOK_URL: ${{ inputs.slack-webhook-url }}
+        SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK

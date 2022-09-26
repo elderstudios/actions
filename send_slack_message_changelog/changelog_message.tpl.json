@@ -1,0 +1,12 @@
+{
+  "blocks": [
+    {
+      "type": "section",
+      "text": {
+        "type": "mrkdwn",
+        "text": "$HEADER_MESSAGE"
+      }
+    },
+    $CHANGELOG
+  ]
+}

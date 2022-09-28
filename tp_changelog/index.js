@@ -77,6 +77,9 @@ const formatCommitMessage = (commit) => {
 
 const getCommits = (url, accessToken) => {
   return axios.get(url, {
+    params: {
+      per_page: 100
+    },
     headers: {
       'Authorization': `token ${accessToken}`
     }

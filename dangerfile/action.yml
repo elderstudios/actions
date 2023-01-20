@@ -1,0 +1,20 @@
+name: 'Danger pull request comments'
+description: 'Runs Danger script to write pull request comments'
+inputs:
+  github_token:
+    description: 'Github API token needed for Danger to make comment'
+    required: true
+  danger_id:
+    description: 'A unique ID to allow multiple comments'
+    required: true
+runs:
+  using: "composite"
+  steps:
+    - uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: 2.6
+        bundler-cache: true
+    - shell: bash
+      env:
+        DANGER_GITHUB_API_TOKEN: ${{ inputs.github_token }}
+      run: bundle exec danger --verbose --danger_id=${{ inputs.danger_id }}

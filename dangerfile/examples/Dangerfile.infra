@@ -1,0 +1,101 @@
+# Add Terraform Plan output to the PR to be reviewed
+# The source file should be generated during `terraform plan`. eg:
+#   terragrunt run-all plan --terragrunt-log-level info \
+#     --terragrunt-working-dir "terraform/dev" -lock=false -out=terraform-plan.tfplan -input=false \
+#     -no-color -compact-warnings --terragrunt-non-interactive 2>&1 | tee terraform/terraform-plan.txt
+def plan_summary()
+  file_name = "terraform/terraform-plan.txt"
+  if (File.file?(file_name))
+    data = File.read(file_name)
+    markdownBody = "<details>\n<summary>Click to see complete plan</summary>\n\n```\n" + data + "```\n\n</details>"
+    markdown "## Terraform Plan"
+    markdown(markdownBody)
+
+    # summary
+    message data[/.*(^Plan: .*?\.$).*/m, 1]
+
+    if (data.match(/.*will be destroyed$.*/m))
+      warn "Resources are being destroyed by terraform"
+    end
+
+    if (data.match(/.*must be replaced$.*/m))
+      warn "Resources are being replaced"
+    end
+
+    if !(data.match(/.*^To perform exactly these actions, run the following command to apply:$.*/))
+      message "Terraform has compared your real infrastructure against your configuration and found no differences."
+    end
+
+    if (data.include? "exit status 1")
+      fail "Plan failed to build some stacks"
+    end
+
+    if (data.include? "Hit multiple errors:")
+      fail "Terragrunt hit multiple errors"
+    end
+
+    if (data.include? "Call to function \"sops_decrypt_file\" failed: Failed to verify data integrity.")
+      fail "SOPS Failed to decrypt secrets file"
+    end
+
+    if (data.include? "level=error")
+      fail "Error level messages have been thrown from terragrunt"
+    end
+  end
+end
+
+plan_summary()
+
+# Adds security report to PR
+# To generate report use:
+#   tfsec --no-color --exclude-downloaded-modules --format lovely --exclude-path \*/.terraform/\* |tee tfsec-report.txt
+def security_report()
+  file_name = "stacks/tfsec-report.txt"
+  if (File.file?(file_name))
+    data = File.read(file_name)
+    markdownBody = "```" + data + "```"
+    markdown "## Security report"
+    markdown(markdownBody)
+
+    if (data.match(/.*^Results? #.+ HIGH .*/m))
+      fail "Contains HIGH level warnings"
+    end
+    if (data.match(/.*^Results? #.+ MEDIUM .*/m))
+      warn "Contains MEDIUM level warnings"
+    end
+  end
+end
+
+security_report()
+
+# Adds formatting issues to PR
+# To generate report use:
+#   terragrunt hclfmt --terragrunt-check || (terragrunt hclfmt && git diff --no-color --output=hclfmt-report.txt .)
+def hcl_format_report()
+  file_name = "terraform/hclfmt-report.txt"
+  if (File.file?(file_name))
+    data = File.read(file_name)
+    markdownBody = "```diff\n" + data + "```"
+    markdown "## HCL format report"
+    markdown(markdownBody)
+    warn "There is a formatting issue with HCL files"
+  end
+end
+
+hcl_format_report()
+
+# Adds formatting issues to PR
+# To generate report use:
+#   terraform fmt -check -write=false -recursive -diff | tee tffmt-report.txt
+def tf_format_report()
+  file_name = "stacks/tffmt-report.txt"
+  if (File.file?(file_name))
+    data = File.read(file_name)
+    markdownBody = "```diff\n" + data + "```"
+    markdown "## Terraform format report"
+    markdown(markdownBody)
+    warn "There is a formatting issue with terraform files"
+  end
+end
+
+tf_format_report()

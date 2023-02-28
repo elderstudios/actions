@@ -58,8 +58,13 @@ const run = async () => {
       unassigned: unknown
     };
 
-    //escape single quotes - we cannot use string that has unescaped single quotes in bash
-    const outputJson = JSON.stringify(output).replaceAll("'", "\\'")
+    // NOTE: In JSON, you don't need to escape single quotes inside a value that is enclosed
+    // with double-quotes. In the case that you have double quotes as part of a value
+    // (that is enclosed with double quotes) then you would need to escape them.
+    // According to the JSON RFC, the characters that MUST be escaped are quotation marks,
+    // reverse solidus, and the control characters (U+0000 through U+001F). However,
+    // escaping double quotes is already handled by JSON.stringify
+    const outputJson = JSON.stringify(output)
 
     //logging both output and output json string for debug purposes
     console.log(util.inspect(output, false, null, true));

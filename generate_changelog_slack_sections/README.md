@@ -128,10 +128,15 @@ $ npm i -g @vercel/ncc
  $ npm install
  ```
 
-3. Set input variables that action requires as environment variables:
+3. Save the changelog JSON document to file `changelog.json` or download the file straight from the pipeline 
+(it is added as an artifact by `tp_changelog` action)
+
+4. Set input variables that action requires as environment variables. It is better to store
+from file content to prevent bash interpreting the single quotes
 
 ``` shell
-$ export INPUT_CHANGELOG_JSON='{"userStories":[{"id":52682,"title":"Improve data in Aurora tenant","state":"Set Prioritisation","url":"https://auroratarget.tpondemand.com/entity/52682","tasks":[{"id":53240,"title":"BE - fix account structure","state":"New","usId":52682,"url":"https://auroratarget.tpondemand.com/entity/53240","commit":"53240"}]}],"bugs":[{"id":53166,"title":"BE - Bill Limits - wrong column api (username instead of tag)","state":"Fixed","url":"https://auroratarget.tpondemand.com/entity/53166","commitTitle":"(TEST 53166)"},{"id":53064,"title":"CI: Changelog contains commit messages","state":"Fixed","url":"https://auroratarget.tpondemand.com/entity/53064","commitTitle":" #53064"}],"unassigned":[{"commit":"sad commit 1 no TP (#1201)","author":"person1"},{"commit":"sad commit 2 no TP (#1202)","author":"person2"}, {"commit":"sad commit 3 no TP (#1203)","author":"person3"}, {"commit":"sad commit 4 no TP (#1204)","author":"person4"},{"commit":"sad commit 5 no TP (#1205)","author":"person5"},{"commit":"sad commit 6 no TP (#1206)","author":"person6"},{"commit":"sad commit 7 no TP (#1207)","author":"person7"},{"commit":"sad commit 8 no TP (#1208)","author":"person8"},{"commit":"sad commit 9 no TP (#1209)","author":"person9"},{"commit":"sad commit 10 no TP (#1210)","author":"person10"},{"commit":"sad commit 11 no TP (#1211)","author":"person11"},{"commit":"sad commit 12 no TP (#1212)","author":"person12"},{"commit":"sad commit 13 no TP (#1213)","author":"person13"},{"commit":"sad commit 14 no TP (#1214)","author":"person14"},{"commit":"sad commit 15 no TP (#1215)","author":"person15"},{"commit":"sad commit 16 no TP (#1216)","author":"person16"}]}'
+
+$ export INPUT_CHANGELOG_JSON=$(<changelog.json)
 ```
 
 4. Then you're ready to run the action locally with:

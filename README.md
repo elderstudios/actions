@@ -6,3 +6,4 @@ instructions.
 - `tp_changelog` - Create a JSON changelog from pull request. Uses TargetProcess API to add links to merged tasks and bugs
 - `generate_changelog_slack_sections` - Transforms JSON changelog provided by `tp_changelog` actions into an array of Slack BlockKit sections.
 - `send_slack_message_deployment` - Sends a slack message defined in a JSON BlockKit template 
+- [`dangerfile`](./dangerfile) - Automate PRs with [Dangerfile]()

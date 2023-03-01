@@ -23,9 +23,11 @@ runs:
         CHANGELOG_JSON: ${{inputs.raw-changelog}}
     - name: Prepare env variables
       shell: bash
+      env:
+        SLACK_CHANGELOG_SECTIONS: ${{steps.prep_slack_changelog.outputs.SLACK_CHANGELOG_SECTIONS}}
       run: |
         echo 'CHANGELOG<<EOF' >> $GITHUB_ENV
-        echo '${{steps.prep_slack_changelog.outputs.SLACK_CHANGELOG_SECTIONS}}' | jq -r '.' | head -n -1 | tail -n +2 >> $GITHUB_ENV
+        echo $SLACK_CHANGELOG_SECTIONS | jq -r '.' | head -n -1 | tail -n +2 >> $GITHUB_ENV
         echo 'EOF' >> $GITHUB_ENV
         echo HEADER_MESSAGE="${{inputs.message}}" >> $GITHUB_ENV
     - name: Checkout to actions repository

@@ -1,0 +1,25 @@
+name: 'Install tooling'
+description: 'Installs terraform, terragrunt, tfsec'
+runs:
+  using: "composite"
+  steps:
+    - uses: actions/cache@v3
+      with:
+        path: |
+          ~/.tfenv
+          ~/.tgenv
+          /usr/local/bin/tfsec
+        key: tf-tools-${{ hashFiles('.*-version') }}
+    - uses: rhythmictech/actions-setup-tfenv@v0.1.2
+    - shell: bash
+      run: |
+        test -d ~/.tgenv || git clone --depth=1 --branch=v0.0.3 https://github.com/cunymatthieu/tgenv.git ~/.tgenv
+        echo $HOME/.tgenv/bin >> "${GITHUB_PATH}"
+    - shell: bash
+      run: |
+        tfenv install
+        tgenv install
+    - shell: bash
+      run: |
+        test -f /usr/local/bin/tfsec || wget https://github.com/aquasecurity/tfsec/releases/download/v1.28.1/tfsec-linux-amd64 -O /usr/local/bin/tfsec
+        chmod a+x /usr/local/bin/tfsec

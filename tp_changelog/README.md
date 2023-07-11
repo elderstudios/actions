@@ -12,7 +12,7 @@ information we build a changelog that is the output of this action.
 * `GITHUB_PR_URL`: URL of the pull request commits, in form `https://api.github.com/repos/{owner}/{repo}/pulls/{pr id}/commits`.
   You should be able to get this URL from workflow environment.
 * `TP_ACCESS_TOKEN`: TargetProcess token you generated
-* `TP_URL`: URL of your TargetProcess
+* `TP_URL` (Optional): URL of your TargetProcess. Default is https://giacom.tpondemand.com
 
 #### Outputs
 
@@ -26,14 +26,14 @@ information we build a changelog that is the output of this action.
       "id": 52682,
       "title": "Improve data in Aurora tenant",
       "state": "Set Prioritisation",
-      "url": "https://auroratarget.tpondemand.com/entity/52682",
+      "url": "https://giacom.tpondemand.com/entity/52682",
       "tasks": [
         {
           "id": 53240,
           "title": "BE - fix account structure",
           "state": "New",
           "usId": 52682,
-          "url": "https://auroratarget.tpondemand.com/entity/53240",
+          "url": "https://giacom.tpondemand.com/entity/53240",
           "commit": "US Task #53240"
         }
       ]
@@ -44,7 +44,7 @@ information we build a changelog that is the output of this action.
       "id": 52667,
       "title": "Demo data missing systemInvoiceRef",
       "state": "In Progress",
-      "url": "https://auroratarget.tpondemand.com/entity/52667",
+      "url": "https://giacom.tpondemand.com/entity/52667",
       "commitTitle": "Bug #52667"
     }
   ],
@@ -86,7 +86,7 @@ $ npm i -g @vercel/ncc
 ```shell
   $ export INPUT_GITHUB_TOKEN=<your github token here>
   $ export INPUT_GITHUB_PR_URL="https://api.github.com/repos/elderstudios/goaccount-backend/pulls/1496/commits"
-  $ export INPUT_TP_URL="https://auroratarget.tpondemand.com"
+  $ export INPUT_TP_URL="https://giacom.tpondemand.com"
   $ export INPUT_TP_ACCESS_TOKEN=<your TP access token>
 ```
 

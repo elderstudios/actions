@@ -2,7 +2,7 @@ const core = require('@actions/core');
 const axios = require('axios');
 const util = require('util');
 
-const fiveDigitRegex = /\d{5}/
+const MIN_TARGET_PROCESS_ID_LENGTH = 5
 
 const run = async () => {
   try {
@@ -107,15 +107,21 @@ const extractIds = (commitsWithAuthor) => {
   const withIds = [];
   const withoutIds = [];
   for (const commit of commitsWithAuthor) {
-    let tpId = commit.commit.match(fiveDigitRegex);
-    if (tpId != null) {
-      let commitWithId = {tpId: tpId[0], commit: commit};
-      withIds.push(commitWithId);
-    } else {
-      withoutIds.push(commit);
+    //parse out all numbers from commit message that seems to be TP ids
+    let tpIdsInCommitMessage = commit.commit.replace(/\D+/g, ' ').trim()
+        .split(' ')
+        .filter(id => id.length >= MIN_TARGET_PROCESS_ID_LENGTH)
+        .map(e => parseInt(e));
+
+    if (tpIdsInCommitMessage.length === 0) {
+      withoutIds.push(commit)
+      continue
     }
+
+    withIds.push(...tpIdsInCommitMessage.map((tpId) => ({tpId: tpId, commit: commit})));
   }
-  return {withIds: withIds, withoutIds: withoutIds};
+
+  return {withIds: removeDuplicates(withIds, 'tpId'), withoutIds: withoutIds};
 }
 
 const fetchBug = (tpId, tpApiUrl, accessToken) => {
@@ -188,6 +194,15 @@ const callTpApi = (tpApiUrl, accessToken, request) => {
   }).catch(error => {
     return null;
   });
+}
+
+/**
+ * Deduplicate from an array objects with the same value of property `prop`
+ */
+function removeDuplicates(myArr, prop) {
+  return myArr.filter((obj, pos, arr) => {
+    return arr.map(mapObj => mapObj[prop]).indexOf(obj[prop]) === pos
+  })
 }
 
 run();

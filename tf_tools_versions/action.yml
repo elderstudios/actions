@@ -13,7 +13,7 @@ runs:
     - uses: rhythmictech/actions-setup-tfenv@v0.1.2
     - shell: bash
       run: |
-        test -d ~/.tgenv || git clone --depth=1 --branch=v0.0.3 https://github.com/cunymatthieu/tgenv.git ~/.tgenv
+        test -d ~/.tgenv || git clone --depth=1 --branch=v1.0.0 https://github.com/tgenv/tgenv.git ~/.tgenv
         echo $HOME/.tgenv/bin >> "${GITHUB_PATH}"
     - shell: bash
       run: |

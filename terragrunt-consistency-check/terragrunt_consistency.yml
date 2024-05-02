@@ -1,0 +1,21 @@
+name: 'Terragrunt Consistency Check'
+description: 'Performs a diff across hcl files to check that they are consistent across envs'
+jobs:
+  consistency-check:
+    runs-on: ubuntu-latest
+    using: "composite"
+    steps:
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.9
+
+    - name: Run consistency check
+      run: |
+        python main.py
+      env:
+        GITHUB_WORKSPACE: ${{ github.workspace }}
+
+    - name: Display consistency check results
+      run: |
+        echo "Consistency check completed"

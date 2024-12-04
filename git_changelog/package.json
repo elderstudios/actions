@@ -1,0 +1,19 @@
+{
+  "name": "git_changelog",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.ts",
+  "scripts": {
+    "build": "tsc && ncc build lib/index.js",
+    "start": "node dist/index.js"
+  },
+  "license": "ISC",
+  "dependencies": {
+    "@actions/core": "^1.11.1",
+    "@actions/github": "^6.0.0",
+    "@vercel/ncc": "^0.38.3"
+  },
+  "devDependencies": {
+    "typescript": "^5.7.2"
+  }
+}

@@ -1,0 +1,15 @@
+name: Create changelog
+description: Creates a JSON changelog from Git commits
+
+inputs:
+  GITHUB_TOKEN:
+    description: GitHub token
+    required: true
+
+outputs:
+  CHANGELOG_JSON:
+    description: JSON containing changelog
+    
+runs:
+  using: node20
+  main: dist/index.js

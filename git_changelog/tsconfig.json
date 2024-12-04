@@ -1,0 +1,12 @@
+/* Visit https://www.typescriptlang.org/tsconfig/ to read more about this file */
+{
+  "compilerOptions": {
+    "module": "CommonJS",
+    "target": "ES6",
+    "outDir": "lib",
+    "allowJs": false,
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "skipLibCheck": true
+  }
+}
